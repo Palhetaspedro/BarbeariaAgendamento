@@ -1,84 +1,64 @@
-# 🪒 Palheta Barbearia — Sistema de Agendamento
+💈 Palheta Barbearia - Sistema de Gestão de Agendamentos Status do Projeto: 🚀 Deploy realizado com sucesso
 
-## Estrutura do Projeto
+Link da Aplicação: https://barbearia-agendamento-seven.vercel.app/
 
-```
-palheta-barbearia/
-│
-├── tailwind.config.js
-│
-└── src/
-    ├── App.jsx                        # Raiz: estado + composição
-    │
-    ├── constants/
-    │   └── index.js                   # Cores, serviços, dados iniciais
-    │
-    ├── utils/
-    │   └── formatDate.js              # Formatação de datas
-    │
-    ├── styles/
-    │   └── global.css                 # Todo o CSS centralizado
-    │
-    └── components/
-        ├── Navbar.jsx                 # Barra de navegação + logo PB
-        ├── Hero.jsx                   # Faixa hero com título
-        ├── FormPanel.jsx              # Formulário de agendamento
-        ├── TablePanel.jsx             # Tabela de agendamentos
-        ├── DeleteModal.jsx            # Modal de confirmação de exclusão
-        ├── Toast.jsx                  # Notificações de sucesso/erro
-        └── Footer.jsx                 # Rodapé com contatos e redes sociais
-```
+Bem-vindo ao repositório da Palheta Barbearia, uma aplicação Full Stack moderna desenvolvida para transformar a experiência de agendamento de serviços de barbearia. Este projeto nasceu da necessidade de conectar clientes a profissionais de forma ágil, elegante e totalmente automatizada.
 
-## Instalação
+🎯 O Sistema: Uma Experiência Humanizada Diferente de sistemas de agendamento rígidos, a Palheta Barbearia foi pensada para ser intuitiva:
 
-```bash
-# 1. Criar projeto React
-npx create-react-app palheta-barbearia
-cd palheta-barbearia
+Para o Cliente: Um formulário limpo, com validações em tempo real que impedem agendamentos no passado, garantindo que o usuário nunca erre a reserva.
 
-# 2. Instalar dependências
-npm install lucide-react
+Para o Barbeiro: Um Dashboard administrativo que elimina cliques desnecessários. O sistema possui uma Lógica de Tempo Real onde o status do agendamento muda sozinho (Confirmado 🟢, Pendente 🟡 ou Cancelado 🔴) baseando-se no relógio do servidor.
 
-# 3. Instalar Tailwind (opcional — projeto usa CSS global)
-npm install -D tailwindcss postcss autoprefixer
-npx tailwindcss init -p
+🛠️ Desafios Técnicos e Soluções (A Jornada do Dev) Este projeto demonstra maturidade técnica ao enfrentar e resolver desafios reais de infraestrutura e código:
 
-# 4. Substituir arquivos com os do projeto
-# Copie todos os arquivos de src/ e o tailwind.config.js
+Deploy Inteligente no Render: O backend utiliza uma estratégia de economia de recursos.
 
-# 5. Rodar
-npm start
-```
+O "Pulo do Gato": Como o servidor gratuito entra em modo de hibernação, o sistema foi otimizado para lidar com o tempo de "acordar" (spin-up) de aproximadamente 50 segundos. Implementamos feedbacks visuais no Front-end para que o usuário compreenda o tempo de processamento inicial.
 
-## Conectar à API Java (futuro)
+Identidade Visual Dinâmica: Criamos um componente React para gerar um Favicon Dinâmico via SVG Base64. A logo (uma tesoura dourada em fundo bege) é injetada via código, garantindo nitidez máxima e eliminando erros de carregamento de ativos estáticos.
 
-No `App.jsx`, substitua o `useState(INITIAL_DATA)` por chamadas fetch:
+Refatoração Vite & Vercel: Toda a estrutura de build foi ajustada para compatibilidade com o ecossistema Vite, resolvendo conflitos de Case Sensitivity e variáveis de ambiente durante o deploy.
 
-```js
-// Exemplo: buscar agendamentos
-useEffect(() => {
-  fetch("http://localhost:8080/api/agendamentos")
-    .then((res) => res.json())
-    .then((data) => setAppointments(data));
-}, []);
+🏗️ Arquitetura do Projeto Frontend React.js & Vite: Interface de alta performance e componentizada.
 
-// Exemplo: criar agendamento
-const handleSubmit = async () => {
-  await fetch("http://localhost:8080/api/agendamentos", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(form),
-  });
-  // ...
-};
-```
+Lucide React: Ícones minimalistas para uma UI moderna.
 
-## Paleta de Cores
+Axios: Comunicação assíncrona com tratamento rigoroso de erros (400, 404, 500).
 
-| Token        | Hex       | Uso                        |
-|-------------|-----------|----------------------------|
-| `bege`      | `#F5F5DC` | Fundo principal            |
-| `preto`     | `#121212` | Navbar, hero, elementos    |
-| `amarelo`   | `#FDE047` | Destaques, bordas, status  |
-| `cinza`     | `#6B6B6B` | Textos secundários         |
-| `begeEscuro`| `#E8E8C8` | Bordas, separadores        |
+Backend Node.js & Express: API robusta e escalável.
+
+PostgreSQL / Supabase: Banco de dados relacional para persistência segura dos dados.
+
+Lógica de Negócio: Validação rigorosa de datas futuras e automação de status por horário.
+
+🚀 Como Iniciar o Projeto
+
+Servidor (Backend) O servidor está hospedado no Render. Ao realizar a primeira requisição após um período de inatividade:
+O servidor recebe o sinal e inicia o processo de "wake-up".
+
+Leva cerca de 50s para carregar o ambiente.
+
+Uma vez ativo, todas as respostas subsequentes são instantâneas.
+
+Rodando Localmente Bash
+Clone o repositório
+git clone https://github.com/seu-usuario/palheta-barbearia
+
+Instale as dependências
+npm install
+
+Inicie o modo de desenvolvimento
+npm run dev 👨‍💻 O que este projeto diz sobre mim? Este projeto reflete minha capacidade de resolver problemas complexos de ponta a ponta. Desde a configuração de portas e variáveis de ambiente no deploy, até o ajuste fino de UX/UI com SVGs complexos. Eu não apenas escrevo código; eu construo soluções que funcionam no mundo real, respeitando as limitações de infraestrutura e focando nas necessidades reais do usuário final.
+
+📞 Contato e Suporte Para dúvidas, sugestões ou oportunidades, entre em contato:
+
+Desenvolvedor: Palhetaspedro
+
+E-mail: Ppalhetapedro@gmail.com
+
+LinkedIn: https://www.linkedin.com/in/pedro-palheta-b81017321/
+
+GitHub: https://github.com/Palhetaspedro
+
+📄 Licença e Direitos Autorais © Palhetaspedro. Todos os direitos reservados. Este projeto foi desenvolvido para fins de portfólio e gestão comercial da Palheta Barbearia.
