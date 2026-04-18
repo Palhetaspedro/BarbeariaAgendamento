@@ -1,7 +1,12 @@
 import { Scissors } from "lucide-react";
 import { SERVICES } from "../constants";
 
-export default function ClienteAgendamento({ form, setForm, onSubmit }) {
+// 1. Mudei o nome para FormPanel para bater com o import do App.jsx
+export default function FormPanel({ form, setForm, onSubmit }) {
+  
+  // 2. Proteção: Se o form ainda não carregou, não deixa o app quebrar
+  if (!form) return null;
+
   const handleChange = (field) => (e) =>
     setForm((prev) => ({ ...prev, [field]: e.target.value }));
 
@@ -11,7 +16,7 @@ export default function ClienteAgendamento({ form, setForm, onSubmit }) {
       justifyContent: 'center',
       alignItems: 'center',
       minHeight: '100vh',
-      background: '#000', // Fundo preto puro para destaque
+      background: '#000', 
       padding: '20px'
     }}>
       
@@ -23,7 +28,7 @@ export default function ClienteAgendamento({ form, setForm, onSubmit }) {
         backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("https://images.unsplash.com/photo-1599351431613-18ef1fdd27e1?q=80&w=688&auto=format&fit=crop")',
         backgroundSize: 'cover',
         color: 'white',
-        boxShadow: '0 0 30px rgba(212, 175, 55, 0.1)' // Brilho dourado sutil
+        boxShadow: '0 0 30px rgba(212, 175, 55, 0.1)' 
       }}>
         
         <div style={{ textAlign: 'center', marginBottom: '30px' }}>
@@ -39,7 +44,7 @@ export default function ClienteAgendamento({ form, setForm, onSubmit }) {
           <input
             className="pb-input"
             placeholder="Digite seu nome"
-            value={form.name}
+            value={form.name || ""}
             onChange={handleChange("name")}
             style={{ background: 'rgba(255,255,255,0.05)', color: 'white', border: '1px solid #333' }}
           />
@@ -49,12 +54,14 @@ export default function ClienteAgendamento({ form, setForm, onSubmit }) {
           <label className="pb-label" style={{ color: 'var(--amarelo)' }}>Serviço</label>
           <select
             className="pb-select"
-            value={form.service}
+            value={form.service || ""}
             onChange={handleChange("service")}
             style={{ background: 'rgba(255,255,255,0.05)', color: 'white', border: '1px solid #333' }}
           >
             <option value="">Selecione o corte</option>
-            {SERVICES.map((s) => <option key={s} value={s} style={{background: '#000'}}>{s}</option>)}
+            {SERVICES && SERVICES.map((s) => (
+              <option key={s} value={s} style={{background: '#000'}}>{s}</option>
+            ))}
           </select>
         </div>
 
@@ -64,22 +71,23 @@ export default function ClienteAgendamento({ form, setForm, onSubmit }) {
             <input
               type="date"
               className="pb-input"
-              value={form.date}
+              value={form.date || ""}
               onChange={handleChange("date")}
               style={{ background: 'rgba(255,255,255,0.05)', color: 'white', border: '1px solid #333' }}
             />
             <input
               type="time"
               className="pb-input"
-              value={form.time}
+              value={form.time || ""}
               onChange={handleChange("time")}
               style={{ background: 'rgba(255,255,255,0.05)', color: 'white', border: '1px solid #333' }}
             />
           </div>
         </div>
 
-       <button
-          onClick={(e) => onSubmit(e)} // ADICIONE O (e) AQUI
+        <button
+          type="button" 
+          onClick={(e) => onSubmit(e)} 
           style={{
             width: '100%',
             padding: '18px',
