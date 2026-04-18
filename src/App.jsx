@@ -16,7 +16,7 @@ import DynamicFavicon from "./components/DynamicFavicon";
 import { EMPTY_FORM } from "./constants";
 
 // Altere para a URL do seu Railway quando subir para a nuvem
-const API_URL = "https://jsonplaceholder.typicode.com/todos/1";
+const API_URL = "https://palhetabarbeariabackend.onrender.com/agendamentos";
 
 export default function App() {
   const [view, setView] = useState("landing"); 
