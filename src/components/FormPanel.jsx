@@ -78,8 +78,8 @@ export default function ClienteAgendamento({ form, setForm, onSubmit }) {
           </div>
         </div>
 
-        <button
-          onClick={onSubmit}
+       <button
+          onClick={(e) => onSubmit(e)} // ADICIONE O (e) AQUI
           style={{
             width: '100%',
             padding: '18px',
