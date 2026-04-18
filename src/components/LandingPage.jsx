@@ -8,6 +8,8 @@ const LandingPage = ({ onNavigate }) => {
     { id: 2, title: "Corte Social Premium", url: "https://plus.unsplash.com/premium_photo-1661290481306-4841edd49719?q=80&w=1032&auto=format&fit=crop" },
     { id: 3, title: "Barba Terapia", url: "https://images.unsplash.com/photo-1517832606299-7ae9b720a186?q=80&w=686&auto=format&fit=crop" },
     { id: 4, title: "Melhores Equipamentos", url: "https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&q=80&w=500" },
+    { id: 5, title: "Corte Kids", url: "https://images.unsplash.com/photo-1593702295094-ada35bc15972?q=80&w=870&auto=format&fit=crop" },
+    { id: 6, title: "Toalha Quente", url: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=870&auto=format&fit=crop" },
   ];
 
   const fotoSobre = "https://images.unsplash.com/photo-1567894340315-735d7c361db0?q=80&w=737&auto=format&fit=crop";
@@ -30,7 +32,6 @@ const LandingPage = ({ onNavigate }) => {
             <span>Barbearia</span>
           </div>
         </div>
-        {/* CORREÇÃO: Passando 'schedule' explicitamente */}
         <button onClick={() => onNavigate('schedule')} className="pb-btn-primary" style={{ width: 'auto', padding: '10px 24px' }}>
           Agendar Agora
         </button>
@@ -90,7 +91,6 @@ const LandingPage = ({ onNavigate }) => {
       <section style={{
         position: 'relative',
         zIndex: 5,
-        // Padding reduzido no mobile para não esmagar o conteúdo
         padding: window.innerWidth < 768 ? '60px 20px' : '100px 56px',
         background: 'var(--bege)',
         display: 'flex',
@@ -100,17 +100,14 @@ const LandingPage = ({ onNavigate }) => {
           maxWidth: '1000px',
           width: '100%',
           display: 'grid',
-          // No mobile (menor que 768px), vira 1 coluna. No desktop, 2 colunas.
           gridTemplateColumns: window.innerWidth < 768 ? '1fr' : 'repeat(auto-fit, minmax(320px, 1fr))',
           gap: window.innerWidth < 768 ? '40px' : '60px',
           alignItems: 'center'
         }}>
 
-          {/* CONTAINER DA FOTO */}
           <div style={{ position: 'relative' }}>
             <div style={{
               width: '100%',
-              // Reduzi um pouco o tamanho máximo no mobile para caber em telas pequenas
               maxWidth: window.innerWidth < 768 ? '300px' : '380px',
               height: window.innerWidth < 768 ? '400px' : '480px',
               border: '2px solid var(--amarelo)',
@@ -126,7 +123,6 @@ const LandingPage = ({ onNavigate }) => {
             </div>
           </div>
 
-          {/* TEXTO (MANTIDO E PROTEGIDO) */}
           <div style={{ textAlign: window.innerWidth < 768 ? 'center' : 'left' }}>
             <span style={{
               color: 'var(--amarelo)',
@@ -140,7 +136,6 @@ const LandingPage = ({ onNavigate }) => {
 
             <h2 style={{
               fontFamily: 'Cormorant Garamond, serif',
-              // Fonte um pouco menor no mobile para não quebrar muitas linhas
               fontSize: window.innerWidth < 768 ? '32px' : '42px',
               color: 'var(--preto)',
               margin: '10px 0 25px'
@@ -163,7 +158,6 @@ const LandingPage = ({ onNavigate }) => {
       {/* CALL TO ACTION */}
       <section style={{ background: 'var(--amarelo)', padding: '100px 20px', textAlign: 'center', position: 'relative', zIndex: 5 }}>
         <h2 className="pb-hero-title" style={{ color: 'var(--preto)', marginBottom: '40px', fontSize: '48px' }}>Pronto para o próximo nível?</h2>
-        {/* CORREÇÃO: Passando 'schedule' explicitamente */}
         <button onClick={() => onNavigate('schedule')} className="pb-btn-primary" style={{ width: 'auto', padding: '20px 60px', fontSize: '16px', margin: '0 auto', background: 'var(--preto)', color: 'var(--amarelo)', boxShadow: '0 10px 20px rgba(0,0,0,0.2)' }}>
           Agendar Atendimento <ArrowRight style={{ marginLeft: '10px' }} size={18} />
         </button>
@@ -184,7 +178,6 @@ const LandingPage = ({ onNavigate }) => {
               <button className="pb-social-btn"><MapPin size={18} /></button>
             </div>
 
-            {/* CORREÇÃO: Passando 'admin' explicitamente */}
             <button
               onClick={() => onNavigate('admin')}
               style={{
