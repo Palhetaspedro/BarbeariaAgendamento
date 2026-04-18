@@ -90,7 +90,7 @@ const LandingPage = ({ onNavigate }) => {
       <section style={{
         position: 'relative',
         zIndex: 5,
-        // Padding dinâmico: menor no mobile (40px 20px) e maior no desktop
+        // Padding reduzido no mobile para não esmagar o conteúdo
         padding: window.innerWidth < 768 ? '60px 20px' : '100px 56px',
         background: 'var(--bege)',
         display: 'flex',
@@ -99,51 +99,64 @@ const LandingPage = ({ onNavigate }) => {
         <div style={{
           maxWidth: '1000px',
           width: '100%',
-          display: 'flex',
-          // Empilha (column) no mobile e coloca lado a lado (row) no desktop
-          flexDirection: window.innerWidth < 768 ? 'column' : 'row',
+          display: 'grid',
+          // No mobile (menor que 768px), vira 1 coluna. No desktop, 2 colunas.
+          gridTemplateColumns: window.innerWidth < 768 ? '1fr' : 'repeat(auto-fit, minmax(320px, 1fr))',
           gap: window.innerWidth < 768 ? '40px' : '60px',
           alignItems: 'center'
         }}>
 
-          {/* Container da Foto */}
-          <div style={{
-            position: 'relative',
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'center'
-          }}>
+          {/* CONTAINER DA FOTO */}
+          <div style={{ position: 'relative' }}>
             <div style={{
               width: '100%',
-              // No mobile a foto diminui proporcionalmente
-              maxWidth: window.innerWidth < 768 ? '280px' : '380px',
-              height: window.innerWidth < 768 ? '360px' : '480px',
+              // Reduzi um pouco o tamanho máximo no mobile para caber em telas pequenas
+              maxWidth: window.innerWidth < 768 ? '300px' : '380px',
+              height: window.innerWidth < 768 ? '400px' : '480px',
               border: '2px solid var(--amarelo)',
-              padding: '10px',
-              background: 'white',
-              boxShadow: '0 10px 30px rgba(0,0,0,0.1)'
+              padding: '15px',
+              margin: '0 auto',
+              background: 'white'
             }}>
               <img
                 src={fotoSobre}
                 alt="O Barbeiro"
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  filter: 'grayscale(20%)'
-                }}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(20%)' }}
               />
             </div>
           </div>
 
-          {/* Container do Texto (Se houver texto ao lado) */}
-          <div style={{
-            flex: 1,
-            textAlign: window.innerWidth < 768 ? 'center' : 'left'
-          }}>
-            {/* Aqui vai o seu <h2> e <p> sobre você */}
-          </div>
+          {/* TEXTO (MANTIDO E PROTEGIDO) */}
+          <div style={{ textAlign: window.innerWidth < 768 ? 'center' : 'left' }}>
+            <span style={{
+              color: 'var(--amarelo)',
+              fontWeight: '600',
+              letterSpacing: '2px',
+              textTransform: 'uppercase',
+              fontSize: '13px'
+            }}>
+              Nossa História
+            </span>
 
+            <h2 style={{
+              fontFamily: 'Cormorant Garamond, serif',
+              // Fonte um pouco menor no mobile para não quebrar muitas linhas
+              fontSize: window.innerWidth < 768 ? '32px' : '42px',
+              color: 'var(--preto)',
+              margin: '10px 0 25px'
+            }}>
+              A Jornada por trás da <em>Navalha</em>
+            </h2>
+
+            <p style={{
+              lineHeight: '1.8',
+              color: 'rgba(0,0,0,0.7)',
+              marginBottom: '20px',
+              fontSize: '16px'
+            }}>
+              A Palheta Barbearia nasceu da paixão pela barbearia clássica e pelo desejo de resgatar o ritual de cuidado masculino.
+            </p>
+          </div>
         </div>
       </section>
 
