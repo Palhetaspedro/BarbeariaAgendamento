@@ -3,10 +3,10 @@ import axios from "axios";
 import "./styles/global.css";
 
 // Importação dos componentes
-import Navbar      from "./components/Navbar";
-import FormPanel   from "./components/FormPanel";
-import Toast       from "./components/Toast";
-import Footer      from "./components/Footer";
+import Navbar from "./components/Navbar";
+import FormPanel from "./components/FormPanel";
+import Toast from "./components/Toast";
+import Footer from "./components/Footer";
 import LandingPage from "./components/LandingPage";
 import AdminDashboard from "./components/AdminDashboard";
 import BarbeiroLogin from "./components/BarbeiroLogin"; 
@@ -15,8 +15,8 @@ import DynamicFavicon from "./components/DynamicFavicon";
 
 import { EMPTY_FORM } from "./constants";
 
-// Altere para a URL do seu Railway quando subir para a nuvem
-const API_URL = "https://palhetabarbeariabackend.onrender.com/agendamentos";
+// URL oficial do seu Back-end no Render
+const API_URL = "https://palhetabarbeariabackend.onrender.com/agendamento";
 
 export default function App() {
   const [view, setView] = useState("landing"); 
@@ -53,14 +53,20 @@ export default function App() {
     if (view === "admin" && isAuthenticated) fetchAppointments();
   }, [view, isAuthenticated, fetchAppointments]);
 
-  const handleSubmit = async () => {
+  // FUNÇÃO CORRIGIDA
+  const handleSubmit = async (e) => {
+    // Impede o comportamento padrão do formulário (evita tela preta/refresh)
+    if (e && e.preventDefault) e.preventDefault();
+
     if (!form.name || !form.service || !form.date || !form.time) {
       showToast("Preencha todos os campos.", "error");
       return;
     }
+
     const payload = {
       clienteNome: form.name,
       servico: form.service,
+      // Formata para o padrão LocalDateTime do Java
       dataHora: `${form.date}T${form.time}:00`
     };
 
@@ -73,10 +79,18 @@ export default function App() {
         await axios.post(API_URL, payload);
         showToast("Agendamento realizado com sucesso!");
       }
+      
       setForm(EMPTY_FORM);
-      if (isAuthenticated) fetchAppointments();
+      
+      if (isAuthenticated) {
+        fetchAppointments();
+      } else {
+        // Opcional: Volta para a home após 2 segundos se for cliente
+        setTimeout(() => setView("landing"), 2000);
+      }
     } catch (error) {
-      showToast("Erro na operação.", "error");
+      console.error("Erro detalhado na requisição:", error);
+      showToast("Erro na operação. Verifique a conexão.", "error");
     }
   };
 
@@ -92,6 +106,7 @@ export default function App() {
       showToast("Agendamento removido.");
       fetchAppointments();
     } catch (error) {
+      console.error("Erro ao deletar:", error);
       showToast("Erro ao deletar.", "error");
     }
   };
