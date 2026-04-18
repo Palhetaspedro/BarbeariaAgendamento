@@ -1,16 +1,20 @@
+import React from 'react';
 import { Pencil, Trash2, Scissors } from "lucide-react";
 import { formatDate } from "../utils/formatDate";
 
-export default function TablePanel({ appointments, onEdit, onDeleteRequest }) {
+export default function TablePanel({ appointments = [], onEdit, onDeleteRequest }) {
+  // Proteção contra appointments sendo null ou undefined
+  const data = appointments || [];
+
   return (
     <section className="pb-content">
       <div className="pb-table-header">
         <h2 className="pb-table-title">Agendamentos</h2>
-        <span className="pb-badge">{appointments.length}</span>
+        <span className="pb-badge">{data.length}</span>
       </div>
 
       <div className="pb-table-wrap">
-        {appointments.length === 0 ? (
+        {data.length === 0 ? (
           <EmptyState />
         ) : (
           <table>
@@ -25,9 +29,9 @@ export default function TablePanel({ appointments, onEdit, onDeleteRequest }) {
               </tr>
             </thead>
             <tbody>
-              {appointments.map((appt) => (
+              {data.map((appt) => (
                 <AppointmentRow
-                  key={appt.id}
+                  key={appt.id || Math.random()} // Evita erro se o ID sumir
                   appt={appt}
                   onEdit={onEdit}
                   onDeleteRequest={onDeleteRequest}
@@ -42,19 +46,28 @@ export default function TablePanel({ appointments, onEdit, onDeleteRequest }) {
 }
 
 function AppointmentRow({ appt, onEdit, onDeleteRequest }) {
+  // Garante que o formatDate não quebre se a data for inválida
+  const safeDate = (dateStr) => {
+    try {
+      return formatDate ? formatDate(dateStr) : dateStr;
+    } catch (e) {
+      return dateStr;
+    }
+  };
+
   return (
     <tr>
-      <td className="td-name">{appt.name}</td>
-      <td className="td-service">{appt.service}</td>
-      <td className="td-date">{formatDate(appt.date)}</td>
-      <td className="td-date">{appt.time}</td>
+      <td className="td-name">{appt.name || "N/A"}</td>
+      <td className="td-service">{appt.service || "Geral"}</td>
+      <td className="td-date">{safeDate(appt.date)}</td>
+      <td className="td-date">{appt.time || "--:--"}</td>
       <td><StatusPill status={appt.status} /></td>
       <td>
         <div className="actions-cell">
-          <button className="action-btn action-edit" title="Editar" onClick={() => onEdit(appt)}>
+          <button className="action-btn action-edit" title="Editar" onClick={() => onEdit && onEdit(appt)}>
             <Pencil size={13} />
           </button>
-          <button className="action-btn action-delete" title="Deletar" onClick={() => onDeleteRequest(appt)}>
+          <button className="action-btn action-delete" title="Deletar" onClick={() => onDeleteRequest && onDeleteRequest(appt)}>
             <Trash2 size={13} />
           </button>
         </div>
@@ -64,7 +77,9 @@ function AppointmentRow({ appt, onEdit, onDeleteRequest }) {
 }
 
 function StatusPill({ status }) {
-  return <span className={`status-pill status-${status}`}>{status}</span>;
+  // Garante que o status não quebre a classe CSS se estiver vazio
+  const currentStatus = status || "pendente";
+  return <span className={`status-pill status-${currentStatus}`}>{currentStatus}</span>;
 }
 
 function EmptyState() {

@@ -2,7 +2,8 @@ import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import "./styles/global.css";
 
-// Importação dos componentes
+// Importação dos componentes - Verifique se os nomes dos arquivos na pasta são idênticos
+import Hero from "./components/Hero";
 import Navbar from "./components/Navbar";
 import FormPanel from "./components/FormPanel";
 import Toast from "./components/Toast";
@@ -13,16 +14,16 @@ import BarbeiroLogin from "./components/BarbeiroLogin";
 import DeleteModal from "./components/DeleteModal";
 import DynamicFavicon from "./components/DynamicFavicon"; 
 
+// Importa as constantes
 import { EMPTY_FORM } from "./constants";
 
-// URL oficial do seu Back-end no Render
 const API_URL = "https://palhetabarbeariabackend.onrender.com/agendamento";
 
 export default function App() {
   const [view, setView] = useState("landing"); 
   const [isAuthenticated, setIsAuthenticated] = useState(false); 
   const [appointments, setAppointments] = useState([]);
-  const [form, setForm] = useState(EMPTY_FORM);
+  const [form, setForm] = useState(EMPTY_FORM || { name: "", service: "", date: "", time: "" });
   const [editingId, setEditingId] = useState(null);
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [toast, setToast] = useState(null);
@@ -35,15 +36,17 @@ export default function App() {
   const fetchAppointments = useCallback(async () => {
     try {
       const response = await axios.get(API_URL);
-      const formattedData = response.data.map(item => ({
-        id: item.id,
-        name: item.clienteNome,
-        service: item.servico,
-        date: item.dataHora.split('T')[0],
-        time: item.dataHora.split('T')[1].substring(0, 5),
-        status: item.confirmado ? "confirmado" : "pendente"
-      }));
-      setAppointments(formattedData);
+      if (response.data && Array.isArray(response.data)) {
+        const formattedData = response.data.map(item => ({
+          id: item.id,
+          name: item.clienteNome,
+          service: item.servico,
+          date: item.dataHora ? item.dataHora.split('T')[0] : "",
+          time: item.dataHora ? item.dataHora.split('T')[1].substring(0, 5) : "",
+          status: item.confirmado ? "confirmado" : "pendente"
+        }));
+        setAppointments(formattedData);
+      }
     } catch (error) {
       console.error("Erro ao buscar agendamentos:", error);
     }
@@ -53,12 +56,11 @@ export default function App() {
     if (view === "admin" && isAuthenticated) fetchAppointments();
   }, [view, isAuthenticated, fetchAppointments]);
 
-  // FUNÇÃO CORRIGIDA
   const handleSubmit = async (e) => {
-    // Impede o comportamento padrão do formulário (evita tela preta/refresh)
     if (e && e.preventDefault) e.preventDefault();
 
-    if (!form.name || !form.service || !form.date || !form.time) {
+    // Verificação de segurança para o objeto form
+    if (!form?.name || !form?.service || !form?.date || !form?.time) {
       showToast("Preencha todos os campos.", "error");
       return;
     }
@@ -66,7 +68,6 @@ export default function App() {
     const payload = {
       clienteNome: form.name,
       servico: form.service,
-      // Formata para o padrão LocalDateTime do Java
       dataHora: `${form.date}T${form.time}:00`
     };
 
@@ -81,33 +82,12 @@ export default function App() {
       }
       
       setForm(EMPTY_FORM);
-      
-      if (isAuthenticated) {
-        fetchAppointments();
-      } else {
-        // Opcional: Volta para a home após 2 segundos se for cliente
-        setTimeout(() => setView("landing"), 2000);
-      }
+      if (isAuthenticated) fetchAppointments();
+      else setTimeout(() => setView("landing"), 2000);
+
     } catch (error) {
-      console.error("Erro detalhado na requisição:", error);
+      console.error("Erro na requisição:", error);
       showToast("Erro na operação. Verifique a conexão.", "error");
-    }
-  };
-
-  const handleEdit = (appt) => {
-    setForm({ name: appt.name, service: appt.service, date: appt.date, time: appt.time });
-    setEditingId(appt.id);
-  };
-
-  const handleDelete = async (id) => {
-    try {
-      await axios.delete(`${API_URL}/${id}`);
-      setDeleteTarget(null);
-      showToast("Agendamento removido.");
-      fetchAppointments();
-    } catch (error) {
-      console.error("Erro ao deletar:", error);
-      showToast("Erro ao deletar.", "error");
     }
   };
 
@@ -115,7 +95,7 @@ export default function App() {
     <>
       <DynamicFavicon />
 
-      {/* 1. TELA INICIAL (LANDING) */}
+      {/* 1. TELA INICIAL */}
       {view === "landing" && (
         <LandingPage onNavigate={(dest) => setView(dest)} />
       )}
@@ -131,7 +111,10 @@ export default function App() {
           <>
             <AdminDashboard 
               appointments={appointments}
-              onEdit={handleEdit}
+              onEdit={(appt) => {
+                setForm({ name: appt.name, service: appt.service, date: appt.date, time: appt.time });
+                setEditingId(appt.id);
+              }}
               onDeleteRequest={setDeleteTarget}
               onLogout={() => { setIsAuthenticated(false); setView("landing"); }}
               editingId={editingId}
@@ -140,11 +123,20 @@ export default function App() {
               onSubmit={handleSubmit}
               onCancel={() => { setForm(EMPTY_FORM); setEditingId(null); }}
             />
-            <DeleteModal 
-              target={deleteTarget} 
-              onConfirm={() => handleDelete(deleteTarget.id)} 
-              onCancel={() => setDeleteTarget(null)} 
-            />
+            {deleteTarget && (
+              <DeleteModal 
+                target={deleteTarget} 
+                onConfirm={async () => {
+                  try {
+                    await axios.delete(`${API_URL}/${deleteTarget.id}`);
+                    setDeleteTarget(null);
+                    showToast("Agendamento removido.");
+                    fetchAppointments();
+                  } catch (e) { showToast("Erro ao deletar.", "error"); }
+                }} 
+                onCancel={() => setDeleteTarget(null)} 
+              />
+            )}
             <Toast toast={toast} />
           </>
         )
@@ -155,27 +147,20 @@ export default function App() {
         <div style={{ background: '#000', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
           <Navbar onGoHome={() => setView("landing")} />
           
-          <main style={{ flex: 1, padding: '60px 20px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <main style={{ flex: 1, padding: '40px 20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            {/* O Hero pode ser usado aqui se você quiser que ele apareça no topo do formulário */}
+            <Hero /> 
+            
             <FormPanel 
               form={form} 
               setForm={setForm} 
-              editing={false} 
               onSubmit={handleSubmit} 
             />
 
-            <div style={{ marginTop: '80px', textAlign: 'center' }}>
-              <h2 style={{ 
-                fontFamily: 'Cormorant Garamond, serif', 
-                fontSize: '52px', 
-                color: 'white', 
-                fontStyle: 'italic',
-                margin: 0 
-              }}>
-                A Melhor <span style={{ color: 'var(--amarelo)' }}>Barbearia</span> da Região
+            <div style={{ marginTop: '50px', textAlign: 'center' }}>
+              <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '42px', color: 'white' }}>
+                A Melhor <span style={{ color: '#FDE047' }}>Barbearia</span> da Região
               </h2>
-              <p style={{ color: 'rgba(255,255,255,0.4)', letterSpacing: '6px', fontSize: '14px', marginTop: '10px' }}>
-                TRADIÇÃO • PRECISÃO • ESTILO
-              </p>
             </div>
           </main>
 

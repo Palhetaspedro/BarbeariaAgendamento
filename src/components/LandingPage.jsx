@@ -30,7 +30,8 @@ const LandingPage = ({ onNavigate }) => {
             <span>Barbearia</span>
           </div>
         </div>
-        <button onClick={onNavigate} className="pb-btn-primary" style={{ width: 'auto', padding: '10px 24px' }}>
+        {/* CORREÇÃO: Passando 'schedule' explicitamente */}
+        <button onClick={() => onNavigate('schedule')} className="pb-btn-primary" style={{ width: 'auto', padding: '10px 24px' }}>
           Agendar Agora
         </button>
       </nav>
@@ -44,7 +45,7 @@ const LandingPage = ({ onNavigate }) => {
         <p className="pb-hero-sub">Muito mais que um corte. Uma experiência de cuidado masculino exclusiva.</p>
       </header>
 
-      {/* GALERIA COM ANIMAÇÃO RESTAURADA */}
+      {/* GALERIA */}
       <section style={{ 
         position: 'relative', 
         zIndex: 5,
@@ -62,13 +63,13 @@ const LandingPage = ({ onNavigate }) => {
           {gallery.map((item, index) => (
             <div 
               key={item.id} 
-              className="pb-table-wrap" // IMPORTANTE: Sua animação CSS está ligada a essa classe
+              className="pb-table-wrap" 
               style={{ 
                 borderRadius: '0', 
                 overflow: 'hidden', 
                 boxShadow: '0 20px 40px rgba(0,0,0,0.15)', 
                 background: 'white',
-                animationDelay: `${index * 0.15}s`, // Efeito de entrada um por um
+                animationDelay: `${index * 0.15}s`,
                 transition: 'transform 0.4s ease'
               }}
               onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-12px)'}
@@ -85,7 +86,7 @@ const LandingPage = ({ onNavigate }) => {
         </div>
       </section>
 
-      {/* SEÇÃO: SOBRE MIM / JORNADA */}
+      {/* SEÇÃO: SOBRE MIM */}
       <section style={{ 
         position: 'relative', 
         zIndex: 5, 
@@ -101,7 +102,6 @@ const LandingPage = ({ onNavigate }) => {
           gap: '60px', 
           alignItems: 'center' 
         }}>
-          
           <div style={{ position: 'relative' }}>
             <div style={{ 
               width: '100%', 
@@ -112,29 +112,16 @@ const LandingPage = ({ onNavigate }) => {
               margin: '0 auto',
               background: 'white'
             }}>
-              <img 
-                src={fotoSobre} 
-                alt="O Barbeiro" 
-                style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(20%)' }} 
-              />
+              <img src={fotoSobre} alt="O Barbeiro" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(20%)' }} />
             </div>
-            <div style={{ position: 'absolute', top: '-20px', left: '20px', width: '100px', height: '100px', borderLeft: '4px solid var(--preto)', borderTop: '4px solid var(--preto)', zIndex: -1 }}></div>
           </div>
 
           <div>
             <span style={{ color: 'var(--amarelo)', fontWeight: '600', letterSpacing: '2px', textTransform: 'uppercase', fontSize: '13px' }}>Nossa História</span>
             <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '42px', color: 'var(--preto)', margin: '10px 0 25px' }}>A Jornada por trás da <em>Navalha</em></h2>
             <p style={{ lineHeight: '1.8', color: 'rgba(0,0,0,0.7)', marginBottom: '20px', fontSize: '16px' }}>
-              A Palheta Barbearia nasceu da paixão pela barbearia clássica e pelo desejo de resgatar o ritual de cuidado masculino. O que começou como um hobby em uma pequena garagem, transformou-se em uma busca incessante pela perfeição no corte e no atendimento.
+              A Palheta Barbearia nasceu da paixão pela barbearia clássica e pelo desejo de resgatar o ritual de cuidado masculino.
             </p>
-            <p style={{ lineHeight: '1.8', color: 'rgba(0,0,0,0.7)', fontSize: '16px' }}>
-              Hoje, somos mais que um salão; somos um ponto de encontro para homens que valorizam a tradição, o estilo e a confiança de um visual bem executado.
-            </p>
-            
-            <div style={{ marginTop: '30px', display: 'flex', gap: '20px', alignItems: 'center' }}>
-               <div style={{ height: '1px', width: '40px', background: 'var(--amarelo)' }}></div>
-               <span style={{ fontFamily: 'Cormorant Garamond', fontStyle: 'italic', fontSize: '20px' }}>Fundador Palheta</span>
-            </div>
           </div>
         </div>
       </section>
@@ -142,46 +129,45 @@ const LandingPage = ({ onNavigate }) => {
       {/* CALL TO ACTION */}
       <section style={{ background: 'var(--amarelo)', padding: '100px 20px', textAlign: 'center', position: 'relative', zIndex: 5 }}>
         <h2 className="pb-hero-title" style={{ color: 'var(--preto)', marginBottom: '40px', fontSize: '48px' }}>Pronto para o próximo nível?</h2>
-        <button onClick={onNavigate} className="pb-btn-primary" style={{ width: 'auto', padding: '20px 60px', fontSize: '16px', margin: '0 auto', background: 'var(--preto)', color: 'var(--amarelo)', boxShadow: '0 10px 20px rgba(0,0,0,0.2)' }}>
+        {/* CORREÇÃO: Passando 'schedule' explicitamente */}
+        <button onClick={() => onNavigate('schedule')} className="pb-btn-primary" style={{ width: 'auto', padding: '20px 60px', fontSize: '16px', margin: '0 auto', background: 'var(--preto)', color: 'var(--amarelo)', boxShadow: '0 10px 20px rgba(0,0,0,0.2)' }}>
           Agendar Atendimento <ArrowRight style={{ marginLeft: '10px' }} size={18} />
         </button>
       </section>
 
       {/* FOOTER */}
-    {/* FOOTER - Adicione esta parte ou substitua a existente */}
-<footer className="pb-footer" style={{ position: 'relative', zIndex: 10, padding: '40px 20px' }}>
-  <div>
-    <div className="pb-footer-brand">Palheta Barbearia</div>
-    <div className="pb-footer-tagline">A arte da barbearia clássica. © 2024</div>
-  </div>
+      <footer className="pb-footer" style={{ position: 'relative', zIndex: 10, padding: '40px 20px', background: 'var(--preto)', color: 'white' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px' }}>
+          <div>
+            <div className="pb-footer-brand" style={{ fontSize: '24px', fontWeight: 'bold' }}>Palheta Barbearia</div>
+            <div className="pb-footer-tagline" style={{ opacity: 0.5 }}>A arte da barbearia clássica. © 2024</div>
+          </div>
 
-  <div className="pb-footer-right" style={{ textAlign: 'right' }}>
-    <div className="pb-footer-socials" style={{ marginBottom: '15px' }}>
-      <button className="pb-social-btn"><Instagram size={18} /></button>
-      <button className="pb-social-btn"><Phone size={18} /></button>
-      <button className="pb-social-btn"><MapPin size={18} /></button>
-    </div>
-    
-    {/* LINK PARA O ADMIN DASHBOARD */}
-    <button 
-      onClick={() => onNavigate('admin')} // Passamos 'admin' como argumento
-      style={{
-        background: 'none',
-        border: 'none',
-        color: 'rgba(255,255,255,0.2)', // Bem discreto
-        fontSize: '11px',
-        textTransform: 'uppercase',
-        letterSpacing: '2px',
-        cursor: 'pointer',
-        transition: 'color 0.3s'
-      }}
-      onMouseEnter={(e) => e.target.style.color = 'var(--amarelo)'}
-      onMouseLeave={(e) => e.target.style.color = 'rgba(255,255,255,0.2)'}
-    >
-      Área dos Barbeiros
-    </button>
-  </div>
-</footer>
+          <div className="pb-footer-right" style={{ textAlign: 'right' }}>
+            <div className="pb-footer-socials" style={{ marginBottom: '15px', display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
+              <button className="pb-social-btn"><Instagram size={18} /></button>
+              <button className="pb-social-btn"><Phone size={18} /></button>
+              <button className="pb-social-btn"><MapPin size={18} /></button>
+            </div>
+            
+            {/* CORREÇÃO: Passando 'admin' explicitamente */}
+            <button 
+              onClick={() => onNavigate('admin')} 
+              style={{
+                background: 'none',
+                border: 'none',
+                color: 'rgba(255,255,255,0.2)',
+                fontSize: '11px',
+                textTransform: 'uppercase',
+                letterSpacing: '2px',
+                cursor: 'pointer'
+              }}
+            >
+              Área dos Barbeiros
+            </button>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };

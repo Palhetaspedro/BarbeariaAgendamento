@@ -4,6 +4,9 @@ import { Scissors, Zap, Wind } from 'lucide-react';
 const BarberBackground = () => {
   const iconsCount = 15;
 
+  // Criamos uma lista de componentes de ícones (referências, não elementos prontos)
+  const iconTypes = [Scissors, Zap, Wind];
+
   return (
     <div className="barber-icon-container">
       {[...Array(iconsCount)].map((_, i) => {
@@ -11,9 +14,8 @@ const BarberBackground = () => {
         const delay = Math.random() * 20;
         const left = Math.random() * 95;
         
-        // Alterna entre Tesoura, Raio (máquina) e Vento (secador)
-        const icons = [<Scissors size={24}/>, <Zap size={24}/>, <Wind size={24}/>];
-        const SelectedIcon = icons[i % 3];
+        // Seleciona o componente da lista usando o resto da divisão
+        const IconComponent = iconTypes[i % iconTypes.length];
 
         return (
           <div
@@ -23,9 +25,12 @@ const BarberBackground = () => {
               left: `${left}%`,
               animationDuration: `${duration}s`,
               animationDelay: `-${delay}s`,
+              position: 'absolute', // Garante que não quebre o layout
+              opacity: 0.1 // Geralmente background é sutil
             }}
           >
-            {SelectedIcon}
+            {/* Renderiza o componente corretamente */}
+            <IconComponent size={24} />
           </div>
         );
       })}
