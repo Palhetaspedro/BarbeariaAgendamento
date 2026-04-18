@@ -3,12 +3,12 @@ import { useEffect } from "react";
 export default function DynamicFavicon() {
   
   useEffect(() => {
-    // Cores da Palheta Barbearia
     const goldLight = "#D4AF37"; 
     const goldDark = "#B8860B";  
-    const beigeBG = "#F5F5DC";     // Fundo Bege Clássico
-    const darkOutline = "#2D1B18"; // Marrom quase preto para contorno super nítido
+    const beigeBG = "#F5F5DC";     
+    const darkOutline = "#2D1B18"; 
 
+    // Ajustei o viewBox e as coordenadas para a tesoura ficar CENTRALIZADA
     const svgString = `
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
         <defs>
@@ -18,36 +18,35 @@ export default function DynamicFavicon() {
           </linearGradient>
         </defs>
         
-        {/* Fundo Bege Arredondado */}
-        <rect x="0" y="0" width="100" height="100" rx="20" ry="20" fill="${beigeBG}"/>
+        <rect x="0" y="0" width="100" height="100" rx="18" ry="18" fill="${beigeBG}"/>
         
-        {/* Grupo da Tesoura Aberta e Inclinada */}
-        <g transform="rotate(-30 50 50)" fill="url(#goldGradient)" stroke="${darkOutline}" stroke-width="2" stroke-linejoin="round">
+        {/* Grupo rotacionado e levemente diminuído (scale 0.9) para caber na tela */}
+        <g transform="translate(50,50) rotate(-30) scale(0.85) translate(-50,-50)" 
+           fill="url(#goldGradient)" stroke="${darkOutline}" stroke-width="3" stroke-linejoin="round">
           
-          {/* Lâmina Superior Aberta */}
-          <path d="M50 50 L85 25 Q90 22 82 18 L48 45 Z" />
+          {/* Lâmina Superior */}
+          <path d="M50 50 L90 20 Q95 15 85 10 L45 45 Z" />
           
-          {/* Lâmina Inferior Aberta */}
-          <path d="M50 50 L85 75 Q90 78 82 82 L48 55 Z" />
+          {/* Lâmina Inferior */}
+          <path d="M50 50 L90 80 Q95 85 85 90 L45 55 Z" />
           
-          {/* Parafuso de ajuste (Pivô) */}
-          <circle cx="50" cy="50" r="4.5" fill="${darkOutline}" stroke="none"/>
+          {/* Parafuso central mais aparente */}
+          <circle cx="50" cy="50" r="5" fill="${darkOutline}" stroke="none"/>
           
-          {/* Haste Superior e Anel */}
-          <path d="M50 50 L30 35 Q22 30 18 40 Q15 50 25 55 L50 50 Z" />
-          <circle cx="22" cy="38" r="10" stroke="${darkOutline}" stroke-width="6" fill="none"/>
+          {/* Haste e Anel Superior */}
+          <path d="M50 50 L30 30 Q20 20 15 35 Q10 50 25 55 L50 50 Z" />
+          <circle cx="18" cy="32" r="12" stroke="${darkOutline}" stroke-width="8" fill="none"/>
           
-          {/* Haste Inferior e Anel (com o apoio de dedo/descanso) */}
-          <path d="M50 50 L30 65 Q22 70 18 60 Q15 50 25 45 L50 50 Z" />
-          <circle cx="22" cy="62" r="10" stroke="${darkOutline}" stroke-width="6" fill="none"/>
-          
-          {/* Detalhe do descanso de dedo (o "rabinho" da tesoura) */}
-          <path d="M14 68 Q10 72 15 75 L20 68" fill="none" stroke="${darkOutline}" stroke-width="3" stroke-linecap="round"/>
+          {/* Haste e Anel Inferior + Descanso de dedo */}
+          <path d="M50 50 L30 70 Q20 80 15 65 Q10 50 25 45 L50 50 Z" />
+          <circle cx="18" cy="68" r="12" stroke="${darkOutline}" stroke-width="8" fill="none"/>
+          <path d="M10 75 Q5 80 12 85" fill="none" stroke="${darkOutline}" stroke-width="4" stroke-linecap="round"/>
         </g>
       </svg>
     `;
 
-    const svgBase64 = `data:image/svg+xml;base64,${btoa(svgString)}`;
+    // Usando encodeURIComponent em vez de btoa para evitar erros de caracteres
+    const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgString)}`;
 
     let link = document.querySelector("link[rel~='icon']");
     if (!link) {
@@ -56,7 +55,7 @@ export default function DynamicFavicon() {
       document.getElementsByTagName('head')[0].appendChild(link);
     }
 
-    link.href = svgBase64;
+    link.href = svgUrl;
     link.type = "image/svg+xml";
 
   }, []);
