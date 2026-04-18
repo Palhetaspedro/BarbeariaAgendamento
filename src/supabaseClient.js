@@ -1,11 +1,11 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.REACT_APP_SUPABASE_URL
-const supabaseAnonKey = process.env.REACT_APP_SUPABASE_ANON_KEY
+// No Vite, usamos import.meta.env em vez de process.env
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
-// Verificação de segurança para não dar erro no console se esquecer o .env
 if (!supabaseUrl || !supabaseAnonKey) {
-  console.error("Erro: As chaves do Supabase não foram encontradas no arquivo .env");
+  console.error("Erro: As chaves VITE_SUPABASE_URL ou VITE_SUPABASE_ANON_KEY não foram encontradas.");
 }
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
