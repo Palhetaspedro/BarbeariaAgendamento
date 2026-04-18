@@ -2,8 +2,7 @@ import React from 'react';
 import { Pencil, Trash2, Scissors } from "lucide-react";
 import { formatDate } from "../utils/formatDate";
 
-export default function TablePanel({ appointments = [], onEdit, onDeleteRequest, onUpdateStatus }) {
-  // Proteção contra appointments sendo null ou undefined
+export default function TablePanel({ appointments = [], onEdit, onDeleteRequest }) {
   const data = appointments || [];
 
   return (
@@ -35,7 +34,6 @@ export default function TablePanel({ appointments = [], onEdit, onDeleteRequest,
                   appt={appt}
                   onEdit={onEdit}
                   onDeleteRequest={onDeleteRequest}
-                  onUpdateStatus={onUpdateStatus}
                 />
               ))}
             </tbody>
@@ -46,7 +44,7 @@ export default function TablePanel({ appointments = [], onEdit, onDeleteRequest,
   );
 }
 
-function AppointmentRow({ appt, onEdit, onDeleteRequest, onUpdateStatus }) {
+function AppointmentRow({ appt, onEdit, onDeleteRequest }) {
   const safeDate = (dateStr) => {
     try {
       return formatDate ? formatDate(dateStr) : dateStr;
@@ -55,6 +53,34 @@ function AppointmentRow({ appt, onEdit, onDeleteRequest, onUpdateStatus }) {
     }
   };
 
+  // --- LÓGICA DE STATUS AUTOMÁTICO ---
+  const getStatus = () => {
+    const agora = new Date();
+    
+    // Criamos a data do agendamento (ajustando o formato para o JS entender)
+    const dataAgendamento = new Date(`${appt.date}T${appt.time}:00`);
+    
+    // Criamos objetos apenas das datas (sem as horas) para comparar os dias
+    const diaAgendamento = new Date(appt.date + "T00:00:00");
+    const hoje = new Date();
+    hoje.setHours(0, 0, 0, 0);
+
+    // 1. Se o dia do agendamento já passou: CANCELADO
+    if (diaAgendamento < hoje) {
+      return { label: "CANCELADO", color: "#991b1b" }; // Vermelho
+    }
+    
+    // 2. Se o dia é hoje ou futuro, mas o horário específico já passou: PENDENTE
+    if (agora > dataAgendamento) {
+      return { label: "PENDENTE", color: "#854d0e" }; // Amarelo/Marrom
+    }
+
+    // 3. Caso contrário: CONFIRMADO
+    return { label: "CONFIRMADO", color: "#065f46" }; // Verde
+  };
+
+  const statusInfo = getStatus();
+
   return (
     <tr>
       <td className="td-name">{appt.name || "N/A"}</td>
@@ -62,29 +88,19 @@ function AppointmentRow({ appt, onEdit, onDeleteRequest, onUpdateStatus }) {
       <td className="td-date">{safeDate(appt.date)}</td>
       <td className="td-date">{appt.time || "--:--"}</td>
       <td>
-        {/* Transformamos o Status em um Select Interativo */}
-        <select
-          value={appt.status || "pendente"}
-          onChange={(e) => onUpdateStatus && onUpdateStatus(appt.id, e.target.value)}
-          style={{
-            background: 
-              appt.status === 'confirmado' ? '#065f46' : 
-              appt.status === 'cancelado' ? '#991b1b' : '#854d0e',
-            color: 'white',
-            border: 'none',
-            padding: '5px 8px',
-            borderRadius: '4px',
-            fontSize: '11px',
-            fontWeight: 'bold',
-            cursor: 'pointer',
-            textTransform: 'uppercase',
-            outline: 'none'
-          }}
-        >
-          <option value="pendente">Pendente</option>
-          <option value="confirmado">Confirmado</option>
-          <option value="cancelado">Cancelado</option>
-        </select>
+        <span style={{
+          background: statusInfo.color,
+          color: 'white',
+          padding: '6px 12px',
+          borderRadius: '4px',
+          fontSize: '10px',
+          fontWeight: 'bold',
+          display: 'inline-block',
+          minWidth: '90px',
+          textAlign: 'center'
+        }}>
+          {statusInfo.label}
+        </span>
       </td>
       <td>
         <div className="actions-cell">
