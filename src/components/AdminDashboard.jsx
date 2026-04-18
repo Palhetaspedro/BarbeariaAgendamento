@@ -5,7 +5,8 @@ import Footer from './Footer';
 import { Scissors, LogOut } from 'lucide-react';
 
 export default function AdminDashboard({ 
-  appointments, onEdit, onDeleteRequest, onLogout, editingId, form, setForm, onSubmit, onCancel 
+  appointments, onEdit, onDeleteRequest, onLogout, editingId, form, setForm, onSubmit, onCancel,
+  onUpdateStatus // <-- Receba a nova prop aqui
 }) {
   return (
     <div style={{
@@ -52,7 +53,8 @@ export default function AdminDashboard({
             <TablePanel 
               appointments={appointments} 
               onEdit={onEdit} 
-              onDeleteRequest={onDeleteRequest} 
+              onDeleteRequest={onDeleteRequest}
+              onUpdateStatus={onUpdateStatus} // <-- Repasse para a tabela aqui
             />
           </div>
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { Pencil, Trash2, Scissors } from "lucide-react";
 import { formatDate } from "../utils/formatDate";
 
-export default function TablePanel({ appointments = [], onEdit, onDeleteRequest }) {
+export default function TablePanel({ appointments = [], onEdit, onDeleteRequest, onUpdateStatus }) {
   // Proteção contra appointments sendo null ou undefined
   const data = appointments || [];
 
@@ -31,10 +31,11 @@ export default function TablePanel({ appointments = [], onEdit, onDeleteRequest 
             <tbody>
               {data.map((appt) => (
                 <AppointmentRow
-                  key={appt.id || Math.random()} // Evita erro se o ID sumir
+                  key={appt.id || Math.random()} 
                   appt={appt}
                   onEdit={onEdit}
                   onDeleteRequest={onDeleteRequest}
+                  onUpdateStatus={onUpdateStatus}
                 />
               ))}
             </tbody>
@@ -45,8 +46,7 @@ export default function TablePanel({ appointments = [], onEdit, onDeleteRequest 
   );
 }
 
-function AppointmentRow({ appt, onEdit, onDeleteRequest }) {
-  // Garante que o formatDate não quebre se a data for inválida
+function AppointmentRow({ appt, onEdit, onDeleteRequest, onUpdateStatus }) {
   const safeDate = (dateStr) => {
     try {
       return formatDate ? formatDate(dateStr) : dateStr;
@@ -61,7 +61,31 @@ function AppointmentRow({ appt, onEdit, onDeleteRequest }) {
       <td className="td-service">{appt.service || "Geral"}</td>
       <td className="td-date">{safeDate(appt.date)}</td>
       <td className="td-date">{appt.time || "--:--"}</td>
-      <td><StatusPill status={appt.status} /></td>
+      <td>
+        {/* Transformamos o Status em um Select Interativo */}
+        <select
+          value={appt.status || "pendente"}
+          onChange={(e) => onUpdateStatus && onUpdateStatus(appt.id, e.target.value)}
+          style={{
+            background: 
+              appt.status === 'confirmado' ? '#065f46' : 
+              appt.status === 'cancelado' ? '#991b1b' : '#854d0e',
+            color: 'white',
+            border: 'none',
+            padding: '5px 8px',
+            borderRadius: '4px',
+            fontSize: '11px',
+            fontWeight: 'bold',
+            cursor: 'pointer',
+            textTransform: 'uppercase',
+            outline: 'none'
+          }}
+        >
+          <option value="pendente">Pendente</option>
+          <option value="confirmado">Confirmado</option>
+          <option value="cancelado">Cancelado</option>
+        </select>
+      </td>
       <td>
         <div className="actions-cell">
           <button className="action-btn action-edit" title="Editar" onClick={() => onEdit && onEdit(appt)}>
@@ -74,12 +98,6 @@ function AppointmentRow({ appt, onEdit, onDeleteRequest }) {
       </td>
     </tr>
   );
-}
-
-function StatusPill({ status }) {
-  // Garante que o status não quebre a classe CSS se estiver vazio
-  const currentStatus = status || "pendente";
-  return <span className={`status-pill status-${currentStatus}`}>{currentStatus}</span>;
 }
 
 function EmptyState() {
