@@ -1,4 +1,3 @@
-import { COLORS } from "../constants";
 export default function DeleteModal({ target, onConfirm, onCancel }) {
   if (!target) return null;
 

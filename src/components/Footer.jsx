@@ -29,7 +29,7 @@ export default function Footer() {
       </footer>
 
       <div className="pb-footer-bottom">
-        <span className="pb-footer-copy">© 2025 Palheta Barbearia — Todos os direitos reservados</span>
+        <span className="pb-footer-copy">© 2026 Palheta Barbearia — Todos os direitos reservados</span>
         <span className="pb-footer-copy">Conectar à API Java</span>
       </div>
     </>

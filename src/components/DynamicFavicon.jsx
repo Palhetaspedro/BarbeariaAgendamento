@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from "react";
 
 // Este componente renderiza o SVG da tesoura dourada e o insere no <head>
 export default function DynamicFavicon() {
