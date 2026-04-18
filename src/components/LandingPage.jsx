@@ -14,7 +14,7 @@ const LandingPage = ({ onNavigate }) => {
 
   return (
     <div className="pb-landing-wrapper" style={{ position: 'relative', overflowX: 'hidden', background: 'var(--bege)' }}>
-      
+
       <BarberBackground />
 
       {/* NAVBAR */}
@@ -46,8 +46,8 @@ const LandingPage = ({ onNavigate }) => {
       </header>
 
       {/* GALERIA */}
-      <section style={{ 
-        position: 'relative', 
+      <section style={{
+        position: 'relative',
         zIndex: 5,
         padding: '100px 56px',
         backgroundImage: 'linear-gradient(rgba(46, 46, 46, 0.85), rgba(245, 245, 220, 0.85)), url("https://images.unsplash.com/photo-1599351431613-18ef1fdd27e1?q=80&w=688&auto=format&fit=crop")',
@@ -58,16 +58,16 @@ const LandingPage = ({ onNavigate }) => {
         <h2 className="pb-table-title" style={{ marginBottom: '60px', textAlign: 'center', fontSize: '32px' }}>
           Portfólio <span style={{ color: 'var(--amarelo)', fontStyle: 'italic' }}>Premium</span>
         </h2>
-        
+
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '40px', maxWidth: '1200px', margin: '0 auto' }}>
           {gallery.map((item, index) => (
-            <div 
-              key={item.id} 
-              className="pb-table-wrap" 
-              style={{ 
-                borderRadius: '0', 
-                overflow: 'hidden', 
-                boxShadow: '0 20px 40px rgba(0,0,0,0.15)', 
+            <div
+              key={item.id}
+              className="pb-table-wrap"
+              style={{
+                borderRadius: '0',
+                overflow: 'hidden',
+                boxShadow: '0 20px 40px rgba(0,0,0,0.15)',
                 background: 'white',
                 animationDelay: `${index * 0.15}s`,
                 transition: 'transform 0.4s ease'
@@ -87,42 +87,63 @@ const LandingPage = ({ onNavigate }) => {
       </section>
 
       {/* SEÇÃO: SOBRE MIM */}
-      <section style={{ 
-        position: 'relative', 
-        zIndex: 5, 
-        padding: '100px 56px', 
+      <section style={{
+        position: 'relative',
+        zIndex: 5,
+        // Padding dinâmico: menor no mobile (40px 20px) e maior no desktop
+        padding: window.innerWidth < 768 ? '60px 20px' : '100px 56px',
         background: 'var(--bege)',
         display: 'flex',
         justifyContent: 'center'
       }}>
-        <div style={{ 
-          maxWidth: '1000px', 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', 
-          gap: '60px', 
-          alignItems: 'center' 
+        <div style={{
+          maxWidth: '1000px',
+          width: '100%',
+          display: 'flex',
+          // Empilha (column) no mobile e coloca lado a lado (row) no desktop
+          flexDirection: window.innerWidth < 768 ? 'column' : 'row',
+          gap: window.innerWidth < 768 ? '40px' : '60px',
+          alignItems: 'center'
         }}>
-          <div style={{ position: 'relative' }}>
-            <div style={{ 
-              width: '100%', 
-              maxWidth: '380px', 
-              height: '480px', 
-              border: '2px solid var(--amarelo)', 
-              padding: '15px',
-              margin: '0 auto',
-              background: 'white'
+
+          {/* Container da Foto */}
+          <div style={{
+            position: 'relative',
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center'
+          }}>
+            <div style={{
+              width: '100%',
+              // No mobile a foto diminui proporcionalmente
+              maxWidth: window.innerWidth < 768 ? '280px' : '380px',
+              height: window.innerWidth < 768 ? '360px' : '480px',
+              border: '2px solid var(--amarelo)',
+              padding: '10px',
+              background: 'white',
+              boxShadow: '0 10px 30px rgba(0,0,0,0.1)'
             }}>
-              <img src={fotoSobre} alt="O Barbeiro" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(20%)' }} />
+              <img
+                src={fotoSobre}
+                alt="O Barbeiro"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  filter: 'grayscale(20%)'
+                }}
+              />
             </div>
           </div>
 
-          <div>
-            <span style={{ color: 'var(--amarelo)', fontWeight: '600', letterSpacing: '2px', textTransform: 'uppercase', fontSize: '13px' }}>Nossa História</span>
-            <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '42px', color: 'var(--preto)', margin: '10px 0 25px' }}>A Jornada por trás da <em>Navalha</em></h2>
-            <p style={{ lineHeight: '1.8', color: 'rgba(0,0,0,0.7)', marginBottom: '20px', fontSize: '16px' }}>
-              A Palheta Barbearia nasceu da paixão pela barbearia clássica e pelo desejo de resgatar o ritual de cuidado masculino.
-            </p>
+          {/* Container do Texto (Se houver texto ao lado) */}
+          <div style={{
+            flex: 1,
+            textAlign: window.innerWidth < 768 ? 'center' : 'left'
+          }}>
+            {/* Aqui vai o seu <h2> e <p> sobre você */}
           </div>
+
         </div>
       </section>
 
@@ -149,10 +170,10 @@ const LandingPage = ({ onNavigate }) => {
               <button className="pb-social-btn"><Phone size={18} /></button>
               <button className="pb-social-btn"><MapPin size={18} /></button>
             </div>
-            
+
             {/* CORREÇÃO: Passando 'admin' explicitamente */}
-            <button 
-              onClick={() => onNavigate('admin')} 
+            <button
+              onClick={() => onNavigate('admin')}
               style={{
                 background: 'none',
                 border: 'none',
