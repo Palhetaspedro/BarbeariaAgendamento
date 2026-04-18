@@ -8,8 +8,8 @@ const LandingPage = ({ onNavigate }) => {
     { id: 2, title: "Corte Social Premium", url: "https://plus.unsplash.com/premium_photo-1661290481306-4841edd49719?q=80&w=1032&auto=format&fit=crop" },
     { id: 3, title: "Barba Terapia", url: "https://images.unsplash.com/photo-1517832606299-7ae9b720a186?q=80&w=686&auto=format&fit=crop" },
     { id: 4, title: "Melhores Equipamentos", url: "https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&q=80&w=500" },
-    { id: 5, title: "Corte Kids", url: "https://images.unsplash.com/photo-1593702295094-ada35bc15972?q=80&w=870&auto=format&fit=crop" },
-    { id: 6, title: "Toalha Quente", url: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=870&auto=format&fit=crop" },
+    { id: 5, title: "Corte Kids", url: "https://plus.unsplash.com/premium_photo-1677098576199-971c398f5403?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+    { id: 6, title: "Toalha Quente", url: "https://images.unsplash.com/photo-1653875700329-a7c8aca94c95?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
   ];
 
   const fotoSobre = "https://images.unsplash.com/photo-1567894340315-735d7c361db0?q=80&w=737&auto=format&fit=crop";
