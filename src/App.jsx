@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import "./styles/global.css";
 
-// Importação dos componentes - Verifique se os nomes dos arquivos na pasta são idênticos
+// Importação dos componentes
 import Hero from "./components/Hero";
 import Navbar from "./components/Navbar";
 import FormPanel from "./components/FormPanel";
@@ -27,6 +27,7 @@ export default function App() {
   const [editingId, setEditingId] = useState(null);
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [toast, setToast] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const showToast = (msg, type = "success") => {
     setToast({ msg, type });
@@ -56,19 +57,21 @@ export default function App() {
     if (view === "admin" && isAuthenticated) fetchAppointments();
   }, [view, isAuthenticated, fetchAppointments]);
 
+  // FUNÇÃO ATUALIZADA COM O SEGREDO DO PAYLOAD E LOG DE ERRO
   const handleSubmit = async (e) => {
     if (e && e.preventDefault) e.preventDefault();
 
-    // Verificação de segurança para o objeto form
     if (!form?.name || !form?.service || !form?.date || !form?.time) {
       showToast("Preencha todos os campos.", "error");
       return;
     }
 
+    setLoading(true);
+
     const payload = {
-      clienteNome: form.name,
+      clienteNome: form.name, 
       servico: form.service,
-      dataHora: `${form.date}T${form.time}:00`
+      dataHora: `${form.date}T${form.time}:00` 
     };
 
     try {
@@ -77,17 +80,24 @@ export default function App() {
         showToast("Agendamento atualizado!");
         setEditingId(null);
       } else {
-        await axios.post(API_URL, payload);
+        const response = await axios.post(API_URL, payload);
+        console.log("Sucesso:", response.data);
         showToast("Agendamento realizado com sucesso!");
       }
       
       setForm(EMPTY_FORM);
-      if (isAuthenticated) fetchAppointments();
-      else setTimeout(() => setView("landing"), 2000);
+      if (isAuthenticated) {
+        fetchAppointments();
+      } else {
+        setTimeout(() => setView("landing"), 2000);
+      }
 
     } catch (error) {
-      console.error("Erro na requisição:", error);
-      showToast("Erro na operação. Verifique a conexão.", "error");
+      // Aqui tratamos o erro 400 que você viu no console
+      console.error("Detalhes do erro do servidor:", error.response?.data);
+      showToast("Erro no formato dos dados ou conexão.", "error");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -95,12 +105,10 @@ export default function App() {
     <>
       <DynamicFavicon />
 
-      {/* 1. TELA INICIAL */}
       {view === "landing" && (
         <LandingPage onNavigate={(dest) => setView(dest)} />
       )}
 
-      {/* 2. ÁREA DO ADMINISTRADOR */}
       {view === "admin" && (
         !isAuthenticated ? (
           <BarbeiroLogin 
@@ -122,6 +130,7 @@ export default function App() {
               setForm={setForm}
               onSubmit={handleSubmit}
               onCancel={() => { setForm(EMPTY_FORM); setEditingId(null); }}
+              isLoading={loading}
             />
             {deleteTarget && (
               <DeleteModal 
@@ -142,19 +151,18 @@ export default function App() {
         )
       )}
 
-      {/* 3. TELA DE AGENDAMENTO DO CLIENTE */}
       {view === "schedule" && (
         <div style={{ background: '#000', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
           <Navbar onGoHome={() => setView("landing")} />
           
           <main style={{ flex: 1, padding: '40px 20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            {/* O Hero pode ser usado aqui se você quiser que ele apareça no topo do formulário */}
             <Hero /> 
             
             <FormPanel 
               form={form} 
               setForm={setForm} 
-              onSubmit={handleSubmit} 
+              onSubmit={handleSubmit}
+              isLoading={loading} 
             />
 
             <div style={{ marginTop: '50px', textAlign: 'center' }}>

@@ -1,11 +1,13 @@
 import { Scissors } from "lucide-react";
 import { SERVICES } from "../constants";
 
-// 1. Mudei o nome para FormPanel para bater com o import do App.jsx
-export default function FormPanel({ form, setForm, onSubmit }) {
+export default function FormPanel({ form, setForm, onSubmit, isLoading }) {
   
-  // 2. Proteção: Se o form ainda não carregou, não deixa o app quebrar
+  // Proteção: Se o form ainda não carregou, não deixa o app quebrar
   if (!form) return null;
+
+  // Pega a data de hoje no formato YYYY-MM-DD para o atributo "min"
+  const hoje = new Date().toISOString().split("T")[0];
 
   const handleChange = (field) => (e) =>
     setForm((prev) => ({ ...prev, [field]: e.target.value }));
@@ -71,16 +73,17 @@ export default function FormPanel({ form, setForm, onSubmit }) {
             <input
               type="date"
               className="pb-input"
+              min={hoje} // IMPEDE DATAS PASSADAS
               value={form.date || ""}
               onChange={handleChange("date")}
-              style={{ background: 'rgba(255,255,255,0.05)', color: 'white', border: '1px solid #333' }}
+              style={{ background: 'rgba(255,255,255,0.05)', color: 'white', border: '1px solid #333', flex: 2 }}
             />
             <input
               type="time"
               className="pb-input"
               value={form.time || ""}
               onChange={handleChange("time")}
-              style={{ background: 'rgba(255,255,255,0.05)', color: 'white', border: '1px solid #333' }}
+              style={{ background: 'rgba(255,255,255,0.05)', color: 'white', border: '1px solid #333', flex: 1 }}
             />
           </div>
         </div>
@@ -88,19 +91,21 @@ export default function FormPanel({ form, setForm, onSubmit }) {
         <button
           type="button" 
           onClick={(e) => onSubmit(e)} 
+          disabled={isLoading} // DESATIVA ENQUANTO ENVIA
           style={{
             width: '100%',
             padding: '18px',
-            background: 'var(--amarelo)',
+            background: isLoading ? '#555' : 'var(--amarelo)', // MUDA A COR SE ESTIVER CARREGANDO
             color: 'black',
             fontWeight: 'bold',
             border: 'none',
-            cursor: 'pointer',
+            cursor: isLoading ? 'not-allowed' : 'pointer',
             fontSize: '16px',
-            letterSpacing: '1px'
+            letterSpacing: '1px',
+            transition: '0.3s'
           }}
         >
-          CONFIRMAR AGENDAMENTO
+          {isLoading ? "PROCESSANDO..." : "CONFIRMAR AGENDAMENTO"}
         </button>
       </div>
     </div>
