@@ -2,7 +2,7 @@
 
 <img src="https://img.shields.io/badge/PALHETA-BARBEARIA-1a1a1a?style=for-the-badge&logoColor=FDE047" alt="Palheta Barbearia" />
 
-# ✂️ PALHETA BARBEARIA
+#  PALHETA BARBEARIA
 ### Sistema de Agendamento Online
 
 [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
@@ -15,27 +15,27 @@
 **Plataforma web fullstack para agendamento de serviços de barbearia.**  
 O cliente agenda seu horário online e o barbeiro gerencia todos os agendamentos pelo painel administrativo.
 
-[🚀 Ver Demo ao Vivo](https://agendamento-seven.vercel.app)
+[ Ver Demo ao Vivo](https://agendamento-seven.vercel.app)
 
 </div>
 
 ---
 
-## 📸 Capturas de Tela
+##  Capturas de Tela
 
-### 🏠 Landing Page
-![Landing Page](assets/barber-landing.png)
+###  Landing Page
+![Landing Page](assets/Paginaprincipal.png)
 
-### 📅 Agendamento — Área do Cliente
-![Agendamento](assets/barber-schedule.png)
+###  Agendamento — Área do Cliente
+![Agendamento](assets/.png)
 
-### 🔐 Login do Barbeiro
+###  Login do Barbeiro
 ![Login](assets/barber-login.png)
 
-### 🛠️ Painel Administrativo
+###  Painel Administrativo
 ![Admin](assets/barber-admin.png)
 
-### 📱 Versão Mobile
+###  Versão Mobile
 <div align="center">
   <img src="assets/barber-mobile.jpeg" width="300" alt="Mobile" />
 </div>
