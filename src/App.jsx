@@ -57,6 +57,17 @@ export default function App() {
     if (view === "admin" && isAuthenticated) fetchAppointments();
   }, [view, isAuthenticated, fetchAppointments]);
 
+  useEffect(() => {
+  const keepAlive = () => {
+    fetch('https://palhetabarbeariabackend.onrender.com/agendamento')
+      .catch(() => {});
+  };
+
+  keepAlive();
+  const interval = setInterval(keepAlive, 14 * 60 * 1000);
+  return () => clearInterval(interval);
+}, []);
+
   // FUNÇÃO ATUALIZADA COM O SEGREDO DO PAYLOAD E LOG DE ERRO
   const handleSubmit = async (e) => {
     if (e && e.preventDefault) e.preventDefault();
