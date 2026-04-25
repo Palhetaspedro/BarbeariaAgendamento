@@ -31,7 +31,7 @@ O cliente agenda seu horário online e o barbeiro gerencia todos os agendamentos
 ##  Capturas de Tela
 
 ###  Landing Page
-![Landing Page](assets/Landingpage.png)
+![Landing Page](assets/Ladingpage.png)
 
 ###  Agendamento — Área do Cliente
 ![Agendamento](assets/Paginaprincipal.png)
