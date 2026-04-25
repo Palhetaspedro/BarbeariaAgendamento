@@ -15,6 +15,13 @@
 **Plataforma web fullstack para agendamento de serviços de barbearia.**  
 O cliente agenda seu horário online e o barbeiro gerencia todos os agendamentos pelo painel administrativo.
 
+##  Acesso para Demo
+
+| Perfil | E-mail | Senha |
+|--------|--------|-------|
+|  Barbeiro | barbeiro@palheta.com | sua_senha |
+
+> Conta de demonstração. Por favor, não altere os agendamentos existentes.
 [ Ver Demo ao Vivo](https://agendamento-seven.vercel.app)
 
 </div>
@@ -24,25 +31,25 @@ O cliente agenda seu horário online e o barbeiro gerencia todos os agendamentos
 ##  Capturas de Tela
 
 ###  Landing Page
-![Landing Page](assets/Paginaprincipal.png)
+![Landing Page](assets/Landingpage.png)
 
 ###  Agendamento — Área do Cliente
-![Agendamento](assets/.png)
+![Agendamento](assets/Paginaprincipal.png)
 
 ###  Login do Barbeiro
-![Login](assets/barber-login.png)
+![Login](assets/LoginBarbeiro.png)
 
 ###  Painel Administrativo
-![Admin](assets/barber-admin.png)
+![Admin](assets/Agendamentos.png)
 
 ###  Versão Mobile
 <div align="center">
-  <img src="assets/barber-mobile.jpeg" width="300" alt="Mobile" />
+  <img src="assets/barbeariamobile.jpeg" width="300" alt="Mobile" />
 </div>
 
 ---
 
-## 💡 Sobre o Projeto
+##  Sobre o Projeto
 
 O **Palheta Barbearia** é um sistema web de agendamento desenvolvido para facilitar a gestão de horários entre clientes e barbeiros.
 
@@ -50,19 +57,19 @@ O cliente acessa o site, escolhe o serviço, a data e o horário e confirma o ag
 
 ---
 
-## ✨ Funcionalidades
+##  Funcionalidades
 
-### 👤 Cliente
-- 📋 Agendar horário com nome, serviço, data e hora
-- 🚀 Sem necessidade de cadastro ou login
-- 📱 Interface responsiva para mobile e desktop
+###  Cliente
+-  Agendar horário com nome, serviço, data e hora
+-  Sem necessidade de cadastro ou login
+-  Interface responsiva para mobile e desktop
 
-### ✂️ Barbeiro (Administrador)
-- 🔐 Login seguro no painel administrativo
-- 📊 Visualização de todos os agendamentos em tempo real
-- ✏️ Editar agendamentos existentes
-- 🗑️ Cancelar/deletar agendamentos
-- 🔄 Status automático por horário:
+###  Barbeiro (Administrador)
+-  Login seguro no painel administrativo
+-  Visualização de todos os agendamentos em tempo real
+-  Editar agendamentos existentes
+-  Cancelar/deletar agendamentos
+-  Status automático por horário:
 
 | Status | Condição |
 |--------|----------|
@@ -72,7 +79,7 @@ O cliente acessa o site, escolhe o serviço, a data e o horário e confirma o ag
 
 ---
 
-## 🏗️ Arquitetura
+##  Arquitetura
 
 ```
 PALHETA BARBEARIA
@@ -92,7 +99,7 @@ PALHETA BARBEARIA
 
 ---
 
-## 📊 Diagrama UML
+##  Diagrama UML
 
 ### Fluxo do Sistema
 
@@ -131,7 +138,7 @@ stateDiagram-v2
 
 ---
 
-## 🛠️ Stack Tecnológica
+##  Stack Tecnológica
 
 | Camada | Tecnologia | Função |
 |--------|-----------|--------|
@@ -143,7 +150,7 @@ stateDiagram-v2
 
 ---
 
-## 🚀 Como Rodar Localmente
+##  Como Rodar Localmente
 
 ### Pré-requisitos
 - Node.js 18+
@@ -182,17 +189,7 @@ npm start
 
 ---
 
-## 🔑 Acesso para Demo
-
-| Perfil | E-mail | Senha |
-|--------|--------|-------|
-| ✂️ Barbeiro | barbeiro@palheta.com | sua_senha |
-
-> Conta de demonstração. Por favor, não altere os agendamentos existentes.
-
----
-
-## 📁 Estrutura de Pastas
+##  Estrutura de Pastas
 
 ```
 palheta-barbearia/
@@ -204,27 +201,27 @@ palheta-barbearia/
 │
 └── backend/
     └── src/
-        ├── routes/         # agendamento.js
-        ├── controllers/    # agendamentoController.js
-        └── models/         # Agendamento.js
+        ├── routes/         # agendamento.java
+        ├── controllers/    # agendamentoController.java
+        └── models/         # Agendamento.java
 ```
 
 ---
 
-## 🧑‍💻 Autor
+##  Autor
 
 <div align="center">
 
 **Pedro Palheta**  
 Desenvolvedor Full Stack
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/seu-perfil)
-[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/seu-usuario)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/pedro-palheta-b81017321/)
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Palhetaspedro)
 
 </div>
 
 ---
 
 <div align="center">
-  <sub>Desenvolvido com 🖤 e ✂️ por Pedro Palheta</sub>
+  <sub>Desenvolvido com 🖤 por Pedro Palheta</sub>
 </div>
