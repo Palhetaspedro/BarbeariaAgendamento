@@ -1,64 +1,230 @@
-💈 Palheta Barbearia - Sistema de Gestão de Agendamentos Status do Projeto: 🚀 Deploy realizado com sucesso
+<div align="center">
 
-Link da Aplicação: https://barbearia-agendamento-seven.vercel.app/
+<img src="https://img.shields.io/badge/PALHETA-BARBEARIA-1a1a1a?style=for-the-badge&logoColor=FDE047" alt="Palheta Barbearia" />
 
-Bem-vindo ao repositório da Palheta Barbearia, uma aplicação Full Stack moderna desenvolvida para transformar a experiência de agendamento de serviços de barbearia. Este projeto nasceu da necessidade de conectar clientes a profissionais de forma ágil, elegante e totalmente automatizada.
+# ✂️ PALHETA BARBEARIA
+### Sistema de Agendamento Online
 
-🎯 O Sistema: Uma Experiência Humanizada Diferente de sistemas de agendamento rígidos, a Palheta Barbearia foi pensada para ser intuitiva:
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)](https://spring.io/)
+[![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com/)
+[![Render](https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://render.com/)
 
-Para o Cliente: Um formulário limpo, com validações em tempo real que impedem agendamentos no passado, garantindo que o usuário nunca erre a reserva.
+**Plataforma web fullstack para agendamento de serviços de barbearia.**  
+O cliente agenda seu horário online e o barbeiro gerencia todos os agendamentos pelo painel administrativo.
 
-Para o Barbeiro: Um Dashboard administrativo que elimina cliques desnecessários. O sistema possui uma Lógica de Tempo Real onde o status do agendamento muda sozinho (Confirmado 🟢, Pendente 🟡 ou Cancelado 🔴) baseando-se no relógio do servidor.
+[🚀 Ver Demo ao Vivo](https://agendamento-seven.vercel.app)
 
-🛠️ Desafios Técnicos e Soluções (A Jornada do Dev) Este projeto demonstra maturidade técnica ao enfrentar e resolver desafios reais de infraestrutura e código:
+</div>
 
-Deploy Inteligente no Render: O backend utiliza uma estratégia de economia de recursos.
+---
 
-O "Pulo do Gato": Como o servidor gratuito entra em modo de hibernação, o sistema foi otimizado para lidar com o tempo de "acordar" (spin-up) de aproximadamente 50 segundos. Implementamos feedbacks visuais no Front-end para que o usuário compreenda o tempo de processamento inicial.
+## 📸 Capturas de Tela
 
-Identidade Visual Dinâmica: Criamos um componente React para gerar um Favicon Dinâmico via SVG Base64. A logo (uma tesoura dourada em fundo bege) é injetada via código, garantindo nitidez máxima e eliminando erros de carregamento de ativos estáticos.
+### 🏠 Landing Page
+![Landing Page](assets/barber-landing.png)
 
-Refatoração Vite & Vercel: Toda a estrutura de build foi ajustada para compatibilidade com o ecossistema Vite, resolvendo conflitos de Case Sensitivity e variáveis de ambiente durante o deploy.
+### 📅 Agendamento — Área do Cliente
+![Agendamento](assets/barber-schedule.png)
 
-🏗️ Arquitetura do Projeto Frontend React.js & Vite: Interface de alta performance e componentizada.
+### 🔐 Login do Barbeiro
+![Login](assets/barber-login.png)
 
-Lucide React: Ícones minimalistas para uma UI moderna.
+### 🛠️ Painel Administrativo
+![Admin](assets/barber-admin.png)
 
-Axios: Comunicação assíncrona com tratamento rigoroso de erros (400, 404, 500).
+### 📱 Versão Mobile
+<div align="center">
+  <img src="assets/barber-mobile.jpeg" width="300" alt="Mobile" />
+</div>
 
-Backend Node.js & Express: API robusta e escalável.
+---
 
-PostgreSQL / Supabase: Banco de dados relacional para persistência segura dos dados.
+## 💡 Sobre o Projeto
 
-Lógica de Negócio: Validação rigorosa de datas futuras e automação de status por horário.
+O **Palheta Barbearia** é um sistema web de agendamento desenvolvido para facilitar a gestão de horários entre clientes e barbeiros.
 
-🚀 Como Iniciar o Projeto
+O cliente acessa o site, escolhe o serviço, a data e o horário e confirma o agendamento — tudo sem precisar de cadastro. O barbeiro faz login no painel administrativo e visualiza todos os agendamentos com status em tempo real.
 
-Servidor (Backend) O servidor está hospedado no Render. Ao realizar a primeira requisição após um período de inatividade:
-O servidor recebe o sinal e inicia o processo de "wake-up".
+---
 
-Leva cerca de 50s para carregar o ambiente.
+## ✨ Funcionalidades
 
-Uma vez ativo, todas as respostas subsequentes são instantâneas.
+### 👤 Cliente
+- 📋 Agendar horário com nome, serviço, data e hora
+- 🚀 Sem necessidade de cadastro ou login
+- 📱 Interface responsiva para mobile e desktop
 
-Rodando Localmente Bash
-Clone o repositório
-git clone https://github.com/seu-usuario/palheta-barbearia
+### ✂️ Barbeiro (Administrador)
+- 🔐 Login seguro no painel administrativo
+- 📊 Visualização de todos os agendamentos em tempo real
+- ✏️ Editar agendamentos existentes
+- 🗑️ Cancelar/deletar agendamentos
+- 🔄 Status automático por horário:
 
-Instale as dependências
+| Status | Condição |
+|--------|----------|
+| ✅ **Confirmado** | Data futura — agendamento válido |
+| ⏳ **Pendente** | Horário já passou mas menos de 24h |
+| ❌ **Cancelado** | Mais de 24h após o horário agendado |
+
+---
+
+## 🏗️ Arquitetura
+
+```
+PALHETA BARBEARIA
+├── Frontend (React + Vite)  →  Vercel
+│   ├── LandingPage      — Página inicial com portfólio
+│   ├── FormPanel        — Formulário de agendamento do cliente
+│   ├── BarbeiroLogin    — Autenticação do barbeiro
+│   └── AdminDashboard   — Painel com lista de agendamentos
+│
+└── Backend (Node.js + Express)  →  Render
+    └── /agendamento
+        ├── GET    →  Listar agendamentos
+        ├── POST   →  Criar agendamento
+        ├── PUT    →  Editar agendamento
+        └── DELETE →  Deletar agendamento
+```
+
+---
+
+## 📊 Diagrama UML
+
+### Fluxo do Sistema
+
+```mermaid
+sequenceDiagram
+    actor C as Cliente
+    actor B as Barbeiro
+    participant F as Frontend
+    participant API as Backend (Render)
+    participant DB as Banco de Dados
+
+    C->>F: Acessa o site
+    C->>F: Preenche nome, serviço, data e hora
+    F->>API: POST /agendamento
+    API->>DB: Salva agendamento
+    DB-->>API: Confirmação
+    API-->>F: 201 Created
+    F-->>C: "Agendamento realizado com sucesso!"
+
+    B->>F: Faz login no painel
+    F->>API: GET /agendamento
+    API->>DB: Busca agendamentos
+    DB-->>API: Lista de agendamentos
+    API-->>F: Agendamentos com status calculado
+    F-->>B: Exibe tabela com status em tempo real
+```
+
+### Status dos Agendamentos
+
+```mermaid
+stateDiagram-v2
+    [*] --> Confirmado : Data futura
+    Confirmado --> Pendente : Horário passou (menos de 24h)
+    Pendente --> Cancelado : Mais de 24h após o horário
+```
+
+---
+
+## 🛠️ Stack Tecnológica
+
+| Camada | Tecnologia | Função |
+|--------|-----------|--------|
+| Frontend | React + Vite | Interface do usuário |
+| Estilização | CSS Modules + Custom CSS | Design premium dark theme |
+| Backend | Node.js + Express | API REST de agendamentos |
+| Deploy Frontend | Vercel | Hospedagem do frontend |
+| Deploy Backend | Render | Hospedagem do servidor |
+
+---
+
+## 🚀 Como Rodar Localmente
+
+### Pré-requisitos
+- Node.js 18+
+
+### Frontend
+
+```bash
+# Clone o repositório
+git clone https://github.com/seu-usuario/palheta-barbearia.git
+
+# Entre na pasta do frontend
+cd frontend
+
+# Instale as dependências
 npm install
 
-Inicie o modo de desenvolvimento
-npm run dev 👨‍💻 O que este projeto diz sobre mim? Este projeto reflete minha capacidade de resolver problemas complexos de ponta a ponta. Desde a configuração de portas e variáveis de ambiente no deploy, até o ajuste fino de UX/UI com SVGs complexos. Eu não apenas escrevo código; eu construo soluções que funcionam no mundo real, respeitando as limitações de infraestrutura e focando nas necessidades reais do usuário final.
+# Rode o projeto
+npm run dev
+```
 
-📞 Contato e Suporte Para dúvidas, sugestões ou oportunidades, entre em contato:
+### Backend
 
-Desenvolvedor: Palhetaspedro
+```bash
+# Entre na pasta do backend
+cd backend
 
-E-mail: Ppalhetapedro@gmail.com
+# Instale as dependências
+npm install
 
-LinkedIn: https://www.linkedin.com/in/pedro-palheta-b81017321/
+# Configure as variáveis de ambiente
+cp .env.example .env
 
-GitHub: https://github.com/Palhetaspedro
+# Rode o servidor
+npm start
+```
 
-📄 Licença e Direitos Autorais © Palhetaspedro. Todos os direitos reservados. Este projeto foi desenvolvido para fins de portfólio e gestão comercial da Palheta Barbearia.
+---
+
+## 🔑 Acesso para Demo
+
+| Perfil | E-mail | Senha |
+|--------|--------|-------|
+| ✂️ Barbeiro | barbeiro@palheta.com | sua_senha |
+
+> Conta de demonstração. Por favor, não altere os agendamentos existentes.
+
+---
+
+## 📁 Estrutura de Pastas
+
+```
+palheta-barbearia/
+├── frontend/
+│   └── src/
+│       ├── components/     # Navbar, Hero, FormPanel, AdminDashboard...
+│       ├── styles/         # CSS global e módulos
+│       └── constants/      # Constantes do formulário
+│
+└── backend/
+    └── src/
+        ├── routes/         # agendamento.js
+        ├── controllers/    # agendamentoController.js
+        └── models/         # Agendamento.js
+```
+
+---
+
+## 🧑‍💻 Autor
+
+<div align="center">
+
+**Pedro Palheta**  
+Desenvolvedor Full Stack
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/seu-perfil)
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/seu-usuario)
+
+</div>
+
+---
+
+<div align="center">
+  <sub>Desenvolvido com 🖤 e ✂️ por Pedro Palheta</sub>
+</div>
