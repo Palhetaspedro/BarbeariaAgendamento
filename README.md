@@ -19,7 +19,7 @@ O cliente agenda seu horário online e o barbeiro gerencia todos os agendamentos
 
 | Perfil | E-mail | Senha |
 |--------|--------|-------|
-|  Barbeiro | barbeiro@palheta.com | sua_senha |
+|  Barbeiro | barbeiro@gmail.com | admin123456 |
 
 > Conta de demonstração. Por favor, não altere os agendamentos existentes.
 [ Ver Demo ao Vivo](https://agendamento-seven.vercel.app)
